@@ -34,8 +34,10 @@ function Modal() {
   const [open, setOpen] = useAtom(openAtom);
   const [rounds, setRounds] = useAtom(roundAtom);
   const continuePlaying = () => {
-    setScore(0);
-    setRounds(0);
+    if(rounds === 10){
+      setScore(0);
+      setRounds(0);
+    }
     setOpen(false);
   };
   useEffect(() => {
