@@ -1,7 +1,10 @@
 import { Dialog, RadioGroup, Transition } from "@headlessui/react";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
+import useScores from "@src/hooks/useScores";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { GoogleMapsProvider } from "@ubilabs/google-maps-react-hooks";
 import clsx from "clsx";
+import { formatDistance } from "date-fns";
 import { atom, useAtom } from "jotai";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import countries from "../countries.json";
@@ -30,18 +33,48 @@ function shuffle(array) {
 }
 
 function Modal() {
-  const [_, setScore] = useAtom(scoreAtom);
+  const { data } = useScores();
+  const queryClient = useQueryClient();
   const [open, setOpen] = useAtom(openAtom);
+  const [score, setScore] = useAtom(scoreAtom);
   const [rounds, setRounds] = useAtom(roundAtom);
-  const continuePlaying = () => {
-    if(rounds === 10){
+  const play = () => {
+    if (rounds === 20) {
       setScore(0);
       setRounds(0);
     }
     setOpen(false);
   };
+  const createScore = useMutation(
+    async (payload) => {
+      const response = await fetch("/api/score", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      return response;
+    },
+    {
+      onSuccess: () => queryClient.invalidateQueries(["scores"]),
+    },
+    {
+      onError: (error) => {
+        console.log(error);
+      },
+    }
+  );
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    createScore.mutate({
+      name: e.target.name.value,
+      score,
+    });
+    e.target.reset();
+  };
   useEffect(() => {
-    if (rounds === 10) setOpen(true);
+    if (rounds === 20) setOpen(true);
   }, [rounds, setOpen]);
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -59,7 +92,7 @@ function Modal() {
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
-          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -69,37 +102,82 @@ function Modal() {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
-                <div>
-                  <div className="mt-3 text-center sm:mt-5">
-                    <img
-                      className="max-w-[30rem]"
-                      src="undraw_under_construction_46pa.png"
-                      alt="under construction"
-                    />
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-500">
-                        Leaderboard coming soon
-                      </p>
+              <Dialog.Panel className="relative my-8 w-full max-w-xl transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all">
+                <div className="border-b border-gray-200 pb-5">
+                  <h3 className="text-lg font-medium leading-6 text-gray-900">
+                    Leaderboard - Top 5
+                  </h3>
+                </div>
+                <ul role="list" className="divide-y divide-gray-200">
+                  {data?.map((person, index) => (
+                    <li key={index} className="flex py-4">
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">
+                          {person.name}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          {formatDistance(
+                            new Date(person.createdAt),
+                            new Date(),
+                            {
+                              addSuffix: true,
+                            }
+                          )}
+                        </p>
+                      </div>
+                      <span className="ml-auto inline-flex items-center rounded-md bg-gray-100 px-2.5 py-0.5 text-sm font-medium text-gray-800">
+                        {person.score} / 20
+                      </span>
+                    </li>
+                  ))}
+                  <li className="my-6 flex py-4">
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">You</p>
+                      <p className="text-sm text-gray-500">Now</p>
+                    </div>
+                    <span className="ml-auto inline-flex items-center rounded-md bg-gray-100 px-2.5 py-0.5 text-sm font-medium text-gray-800">
+                      {score} / 20
+                    </span>
+                  </li>
+                </ul>
+                <form className="space-y-4" onSubmit={handleOnSubmit}>
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Name
+                    </label>
+                    <div className="mt-1">
+                      <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        className="block w-full rounded-lg border-gray-300 py-3 shadow-sm focus:border-black focus:ring-black"
+                        required
+                      />
                     </div>
                   </div>
-                </div>
-                <div className="mt-12 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                   <button
-                    type="button"
-                    className="inline-flex w-full justify-center rounded-md border border-transparent bg-black px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-2 sm:col-start-2 sm:text-sm"
-                    onClick={continuePlaying}
+                    type="submit"
+                    className={clsx(
+                      rounds < 20
+                        ? "cursor-not-allowed bg-slate-500 hover:bg-slate-600"
+                        : "bg-black hover:bg-slate-800",
+                      "w-full rounded-lg border border-transparent px-6 py-3 text-base font-medium text-white shadow-sm transition duration-300 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-2"
+                    )}
+                    disabled={rounds < 20}
                   >
-                    Continue playing
+                    Submit score
                   </button>
                   <button
                     type="button"
-                    className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
-                    onClick={() => setOpen(false)}
+                    className="w-full rounded-lg border-2 border-black px-6 py-3 text-base font-medium text-black shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-2"
+                    onClick={play}
                   >
-                    Cancel
+                    {rounds === 20 ? "Play again" : "Continue playing"}
                   </button>
-                </div>
+                </form>
               </Dialog.Panel>
             </Transition.Child>
           </div>
@@ -161,7 +239,7 @@ function Rounds() {
       <div className="overflow-hidden rounded-full bg-gray-200">
         <div
           className="h-2 rounded-full bg-black transition-all duration-300"
-          style={{ width: (rounds / 10) * 100 + "%" }}
+          style={{ width: (rounds / 20) * 100 + "%" }}
         />
       </div>
     </div>
@@ -273,15 +351,20 @@ function Buttons() {
       <button
         type="button"
         onClick={handleOnClick}
-        className="w-full rounded-lg border border-transparent bg-black px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-2"
-        disabled={!selectedCountry || rounds >= 10}
+        className={clsx(
+          !selectedCountry || rounds >= 20
+            ? "cursor-not-allowed bg-slate-500 hover:bg-slate-600"
+            : "bg-black",
+          "w-full rounded-lg border border-transparent px-6 py-3 text-base font-medium text-white shadow-sm transition duration-300 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+        )}
+        disabled={!selectedCountry || rounds >= 20}
       >
         Submit
       </button>
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="w-full rounded-lg border-2 border-black px-6 py-3 text-base font-medium text-black shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-2"
+        className="w-full rounded-lg border-2 border-black px-6 py-3 text-base font-medium text-black shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
       >
         Leaderboard
       </button>

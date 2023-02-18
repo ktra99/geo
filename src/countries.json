@@ -654,5 +654,29 @@
       "lng": -15.310139
     },
     "description": "West African country with friendly people."
+  },
+  {
+    "name": "Guinea",
+    "position": {
+      "lat": 9.945587,
+      "lng": -9.696645
+    },
+    "description": "West African country with diverse geography."
+  },
+  {
+    "name": "Guadeloupe",
+    "position": {
+      "lat": 	16.995971,
+      "lng": -62.067641
+    },
+    "description": "Caribbean island with French colonial influence."
+  },
+  {
+    "name": "Equatorial Guinea",
+    "position": {
+      "lat": 1.650801,
+      "lng": 10.267895
+    },
+    "description": "Central African country with oil resources."
   }
 ]
