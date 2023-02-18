@@ -14,8 +14,9 @@ This is my Geoguessr inspired web app built on [ubilabs/google-maps-react-hooks]
 - Randomized shuffle
 - Progress bar
 - Leaderboard panel
-- Authentication with Supabase
 - ORM with Prisma.js
+- Data flow with React-query
+- Supabase DB
 
 ## Stack
 - Next.js
@@ -24,6 +25,7 @@ This is my Geoguessr inspired web app built on [ubilabs/google-maps-react-hooks]
 - Jotai
 - Supabase
 - Prisma.js
+- React-query
 
 ## License
 
