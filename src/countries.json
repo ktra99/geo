@@ -266,7 +266,7 @@
   {
     "name": "Belarus",
     "position": {
-      "lat": 	53.709807,
+      "lat": 53.709807,
       "lng": 27.953389
     },
     "description": "Eastern Europe, history, culture, architecture, forests."
@@ -443,7 +443,7 @@
     "name": "Denmark",
     "position": {
       "lat": 56.26392,
-      "lng": 	9.501785
+      "lng": 9.501785
     },
     "description": "Bicycles, pastries, Vikings, hygge lifestyle."
   },
@@ -451,8 +451,208 @@
     "name": "Dominica",
     "position": {
       "lat": 15.414999,
-      "lng": 	-61.370976
+      "lng": -61.370976
     },
     "description": "Lush rainforests, hot springs, Caribbean charm."
+  },
+  {
+    "name": "Dominican Republic",
+    "position": {
+      "lat": 18.735693,
+      "lng": -70.162651
+    },
+    "description": "Tropical paradise with vibrant Caribbean culture."
+  },
+  {
+    "name": "Algeria",
+    "position": {
+      "lat": 28.033886,
+      "lng": 1.659626
+    },
+    "description": "North African country with rich history."
+  },
+  {
+    "name": "Ecuador",
+    "position": {
+      "lat": -1.831239,
+      "lng": -78.183406
+    },
+    "description": "Biodiverse country straddling the Equator."
+  },
+  {
+    "name": "Estonia",
+    "position": {
+      "lat": 58.595272,
+      "lng": 25.013607
+    },
+    "description": "Baltic state with tech-savvy society."
+  },
+  {
+    "name": "Egypt",
+    "position": {
+      "lat": 26.820553,
+      "lng": 30.802498
+    },
+    "description": "Land of ancient wonders and pyramids."
+  },
+  {
+    "name": "Western Sahara",
+    "position": {
+      "lat": 24.215527,
+      "lng": -12.885834
+    },
+    "description": "Disputed territory with complex political situation."
+  },
+  {
+    "name": "Eritrea",
+    "position": {
+      "lat": 15.179384,
+      "lng": 39.782334
+    },
+    "description": "Horn of Africa country with diverse cultures."
+  },
+  {
+    "name": "Spain",
+    "position": {
+      "lat": 40.463667,
+      "lng": -3.74922
+    },
+    "description": "Sunny Mediterranean country with rich history."
+  },
+  {
+    "name": "Ethiopia",
+    "position": {
+      "lat": 9.145,
+      "lng": 40.489673
+    },
+    "description": "Land of origins and vibrant cultures."
+  },
+  {
+    "name": "Finland",
+    "position": {
+      "lat": 61.92411,
+      "lng": 25.748151
+    },
+    "description": "Nordic country with stunning natural beauty."
+  },
+  {
+    "name": "Fiji",
+    "position": {
+      "lat": -16.578193,
+      "lng": 179.414413
+    },
+    "description": "Tropical paradise with friendly island culture."
+  },
+  {
+    "name": "Falkland Islands",
+    "position": {
+      "lat": -51.796253,
+      "lng": -59.523613
+    },
+    "description": "Remote British territory with unique wildlife."
+  },
+  {
+    "name": "Micronesia",
+    "position": {
+      "lat": 7.425554,
+      "lng": 150.550812
+    },
+    "description": "Island nation with crystal clear waters."
+  },
+  {
+    "name": "Faroe Islands",
+    "position": {
+      "lat": 61.892635,
+      "lng": -6.911806
+    },
+    "description": "Remote archipelago with dramatic landscapes."
+  },
+  {
+    "name": "France",
+    "position": {
+      "lat": 46.227638,
+      "lng": 2.213749
+    },
+    "description": "Cultural hub with stunning cuisine variety."
+  },
+  {
+    "name": "Gabon",
+    "position": {
+      "lat": -0.803689,
+      "lng": 11.609444
+    },
+    "description": "Central African country with vast rainforest."
+  },
+  {
+    "name": "United Kingdom",
+    "position": {
+      "lat": 55.378051,
+      "lng": -3.435973
+    },
+    "description": "Historic country with diverse regional identities."
+  },
+  {
+    "name": "Grenada",
+    "position": {
+      "lat": 12.262776,
+      "lng": -61.604171
+    },
+    "description": "Caribbean island with colorful colonial architecture."
+  },
+  {
+    "name": "Georgia",
+    "position": {
+      "lat": 42.315407,
+      "lng": 43.356892
+    },
+    "description": "Caucasian country with ancient winemaking tradition."
+  },
+  {
+    "name": "French Guiana",
+    "position": {
+      "lat": 3.933889,
+      "lng": -53.125782
+    },
+    "description": "Overseas territory with Amazonian rainforest."
+  },
+  {
+    "name": "Guernsey",
+    "position": {
+      "lat": 49.465691,
+      "lng": -2.585278
+    },
+    "description": "British island with charming coastal villages."
+  },
+  {
+    "name": "Ghana",
+    "position": {
+      "lat": 7.946527,
+      "lng": -1.023194
+    },
+    "description": "West African country with rich culture."
+  },
+  {
+    "name": "Gibraltar",
+    "position": {
+      "lat": 36.137741,
+      "lng": 	-5.345374
+    },
+    "description": "British territory with iconic rock landmark."
+  },
+  {
+    "name": "Greenland",
+    "position": {
+      "lat": 71.706936,
+      "lng": -42.604303
+    },
+    "description": "Arctic country with stunning icy landscapes."
+  },
+  {
+    "name": "Gambia",
+    "position": {
+      "lat": 13.443182,
+      "lng": -15.310139
+    },
+    "description": "West African country with friendly people."
   }
 ]
