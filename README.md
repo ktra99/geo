@@ -11,8 +11,11 @@ This is my Geoguessr inspired web app built on [ubilabs/google-maps-react-hooks]
 ## Features
 - Dynamic marker
 - State management with Jotai
+- Randomized shuffle
 - Progress bar
 - Leaderboard panel
+- Authentication with Supabase
+- ORM with Prisma.js
 
 ## Stack
 - Next.js
