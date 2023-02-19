@@ -47,6 +47,7 @@ function Modal() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "x-auth-token": process.env.NEXT_PUBLIC_TOKEN as string,
         },
         body: JSON.stringify(payload),
       });

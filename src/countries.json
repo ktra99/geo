@@ -635,7 +635,7 @@
     "name": "Gibraltar",
     "position": {
       "lat": 36.137741,
-      "lng": 	-5.345374
+      "lng": -5.345374
     },
     "description": "British territory with iconic rock landmark."
   },
@@ -666,7 +666,7 @@
   {
     "name": "Guadeloupe",
     "position": {
-      "lat": 	16.995971,
+      "lat": 16.995971,
       "lng": -62.067641
     },
     "description": "Caribbean island with French colonial influence."
@@ -678,5 +678,277 @@
       "lng": 10.267895
     },
     "description": "Central African country with oil resources."
+  },
+  {
+    "name": "Greece",
+    "position": {
+      "lat": 39.074208,
+      "lng": 21.824312
+    },
+    "description": "Ancient history, stunning beaches and cuisine."
+  },
+  {
+    "name": "South Georgia",
+    "position": {
+      "lat": -54.429579,
+      "lng": -36.587909
+    },
+    "description": "Remote, rugged, icy wilderness of Antarctica."
+  },
+  {
+    "name": "Guatemala",
+    "position": {
+      "lat": 15.783471,
+      "lng": -90.230759
+    },
+    "description": "Mayan ruins, volcanoes, vibrant culture, textiles."
+  },
+  {
+    "name": "Guam",
+    "position": {
+      "lat": 13.444304,
+      "lng": 144.793731
+    },
+    "description": "Tropical paradise with Chamorro heritage."
+  },
+  {
+    "name": "Guinea-Bissau",
+    "position": {
+      "lat": 11.803749,
+      "lng": -15.180413
+    },
+    "description": "Coastal country with diverse ethnic groups."
+  },
+  {
+    "name": "Guyana",
+    "position": {
+      "lat": 4.860416,
+      "lng": -58.93018
+    },
+    "description": "Untouched rainforests, rich biodiversity and culture."
+  },
+  {
+    "name": "Gaza Strip",
+    "position": {
+      "lat": 31.354676,
+      "lng": 34.308825
+    },
+    "description": "Conflict zone with limited resources, division."
+  },
+  {
+    "name": "Hong Kong",
+    "position": {
+      "lat": 22.396428,
+      "lng": 114.109497
+    },
+    "description": "Vibrant city, culture, commerce, skyscrapers."
+  },
+  {
+    "name": "Heard Island",
+    "position": {
+      "lat": -53.08181,
+      "lng": 73.504158
+    },
+    "description": "Uninhabited volcanic islands in Southern Ocean."
+  },
+  {
+    "name": "Honduras",
+    "position": {
+      "lat": 15.199999,
+      "lng": -86.241905
+    },
+    "description": "Caribbean and Pacific, ancient Mayan ruins."
+  },
+  {
+    "name": "Croatia",
+    "position": {
+      "lat": 45.1,
+      "lng": 15.2
+    },
+    "description": "Azure coast, ancient cities, island paradise."
+  },
+  {
+    "name": "Haiti",
+    "position": {
+      "lat": 18.971187,
+      "lng": -72.285215
+    },
+    "description": "Tumultuous history, vibrant art, Creole cuisine."
+  },
+  {
+    "name": "Hungary",
+    "position": {
+      "lat": 47.162494,
+      "lng": 19.503304
+    },
+    "description": "Thermal baths, Danube, goulash, paprika."
+  },
+  {
+    "name": "Indonesia",
+    "position": {
+      "lat": -0.789275,
+      "lng": 113.921327
+    },
+    "description": "Archipelago with diverse culture, wildlife, volcanoes."
+  },
+  {
+    "name": "Ireland",
+    "position": {
+      "lat": 53.41291,
+      "lng": -8.24389
+    },
+    "description": "Emerald Isle, castles, Guinness, folklore."
+  },
+  {
+    "name": "Israel",
+    "position": {
+      "lat": 31.046051,
+      "lng": 34.851612
+    },
+    "description": "Biblical history, vibrant cities and cuisine."
+  },
+  {
+    "name": "Isle of Man",
+    "position": {
+      "lat": 54.236107,
+      "lng": -4.548056
+    },
+    "description": "Celtic charm, motorcycle racing capital."
+  },
+  {
+    "name": "India",
+    "position": {
+      "lat": 20.593684,
+      "lng": 78.96288
+    },
+    "description": "Vast subcontinent, diverse cultures, colorful festivals."
+  },
+  {
+    "name": "British Indian",
+    "position": {
+      "lat": -6.343194,
+      "lng": 71.876519
+    },
+    "description": "Atoll paradise with military base controversy."
+  },
+  {
+    "name": "Iraq",
+    "position": {
+      "lat": 33.223191,
+      "lng": 43.679291
+    },
+    "description": "Mesopotamian civilization, oil-rich, conflict-torn."
+  },
+  {
+    "name": "Iran",
+    "position": {
+      "lat": 32.427908,
+      "lng": 53.688046
+    },
+    "description": "Ancient civilization, Islamic architecture, Persian rugs."
+  },
+  {
+    "name": "Iceland",
+    "position": {
+      "lat": 64.963051,
+      "lng": -19.020835
+    },
+    "description": "Fire and ice, aurora, geothermal pools."
+  },
+  {
+    "name": "Italy",
+    "position": {
+      "lat": 41.87194,
+      "lng": 12.56738
+    },
+    "description": "Art, architecture, cuisine, history, fashion."
+  },
+  {
+    "name": "Jersey",
+    "position": {
+      "lat": 49.214439,
+      "lng": -2.13125
+    },
+    "description": "Picturesque island with Norman-French influence."
+  },
+  {
+    "name": "Jamaica",
+    "position": {
+      "lat": 18.109581,
+      "lng": -77.297508
+    },
+    "description": "Reggae, jerk chicken, beaches, Bob Marley."
+  },
+  {
+    "name": "Jordan",
+    "position": {
+      "lat": 30.585164,
+      "lng": 36.238414
+    },
+    "description": "Ancient ruins, red desert, Bedouin hospitality."
+  },
+  {
+    "name": "Japan",
+    "position": {
+      "lat": 36.204824,
+      "lng": 138.252924
+    },
+    "description": "Technology, sushi, cherry blossoms, samurai, anime."
+  },
+  {
+    "name": "Kenya",
+    "position": {
+      "lat": -0.023559,
+      "lng": 37.906193
+    },
+    "description": "Safari wildlife, Maasai culture, Swahili coast."
+  },
+  {
+    "name": "Kyrgyzstan",
+    "position": {
+      "lat": 41.20438,
+      "lng": 74.766098
+    },
+    "description": "Mountainous country with nomadic traditions."
+  },
+  {
+    "name": "Cambodia",
+    "position": {
+      "lat": 12.565679,
+      "lng": 104.990963
+    },
+    "description": "Angkor temples, Khmer culture, Mekong River."
+  },
+  {
+    "name": "Kiribati",
+    "position": {
+      "lat": -3.370417,
+      "lng": -168.734039
+    },
+    "description": "Remote Pacific islands, coral atolls, lagoons."
+  },
+  {
+    "name": "Comoros",
+    "position": {
+      "lat": 17.357822,
+      "lng": -62.782998
+    },
+    "description": "Volcanic islands, rich Arab-African culture."
+  },
+  {
+    "name": "North Korea",
+    "position": {
+      "lat": 40.339852,
+      "lng": 127.510093
+    },
+    "description": "Isolated regime, nuclear ambitions, propaganda."
+  },
+  {
+    "name": "South Korea",
+    "position": {
+      "lat": 35.907757,
+      "lng": 127.766922
+    },
+    "description": "K-pop, kimchi, technology, Confucianism, Buddhism."
   }
 ]
