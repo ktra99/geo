@@ -1,36 +1,32 @@
 import { Dialog, RadioGroup, Transition } from "@headlessui/react";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
+import {
+  currentAtom,
+  markerAtom,
+  openAtom,
+  randomAtom,
+  roundAtom,
+  scoreAtom,
+  selectedAtom,
+} from "@src/atoms";
 import useScores from "@src/hooks/useScores";
+import { Country } from "@src/types";
+import { shuffle } from "@src/utils/shuffle";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { GoogleMapsProvider } from "@ubilabs/google-maps-react-hooks";
 import clsx from "clsx";
 import { formatDistance } from "date-fns";
-import { atom, useAtom } from "jotai";
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { useAtom } from "jotai";
+import dynamic from "next/dynamic";
+import { FormEvent, Fragment, useCallback, useEffect, useState } from "react";
 import countries from "../countries.json";
 
-const scoreAtom = atom(0);
-const roundAtom = atom(0);
-const openAtom = atom(false);
-const selectedAtom = atom(null);
-const randomAtom = atom(Math.floor(Math.random() * (10 - 6 + 1) + 6));
-const currentAtom = atom(
-  countries[Math.floor(Math.random() * countries.length)]
+const GoogleMapsProvider = dynamic(
+  () =>
+    import("@ubilabs/google-maps-react-hooks").then(
+      (mod) => mod.GoogleMapsProvider
+    ),
+  { ssr: false }
 );
-
-function shuffle(array) {
-  let currentIndex = array.length,
-    randomIndex;
-  while (currentIndex != 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex],
-      array[currentIndex],
-    ];
-  }
-  return array;
-}
 
 function Modal() {
   const { data } = useScores();
@@ -46,7 +42,7 @@ function Modal() {
     setOpen(false);
   };
   const createScore = useMutation(
-    async (payload) => {
+    async (payload: { name: string; score: number }) => {
       const response = await fetch("/api/score", {
         method: "POST",
         headers: {
@@ -58,20 +54,23 @@ function Modal() {
     },
     {
       onSuccess: () => queryClient.invalidateQueries(["scores"]),
-    },
-    {
       onError: (error) => {
         console.log(error);
       },
     }
   );
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const target = e.target as typeof e.target & {
+      reset: () => void;
+      name: { value: string };
+    };
+    const name = target.name.value;
     createScore.mutate({
-      name: e.target.name.value,
+      name,
       score,
     });
-    e.target.reset();
+    target.reset();
   };
   useEffect(() => {
     if (rounds === 20) setOpen(true);
@@ -248,12 +247,12 @@ function Rounds() {
 
 function Cards() {
   const [score] = useAtom(scoreAtom);
-  const [options, setOptions] = useState([]);
+  const [options, setOptions] = useState<Country[]>([]);
   const [currentCountry] = useAtom(currentAtom);
   const [selected, setSelected] = useAtom(selectedAtom);
   useEffect(() => {
     if (currentCountry) {
-      const list = [currentCountry];
+      const list: Country[] = [currentCountry];
       while (list.length < 3) {
         const country = countries[Math.floor(Math.random() * countries.length)];
         if (
@@ -339,7 +338,7 @@ function Buttons() {
     const list = countries.filter(
       (country) => country.name !== currentCountry.name
     );
-    if (selectedCountry.position === currentCountry.position)
+    if (selectedCountry?.position === currentCountry.position)
       setScore(score + 1);
     setRounds(rounds + 1);
     setSelectedCountry(null);
@@ -373,16 +372,14 @@ function Buttons() {
 }
 
 export default function Home() {
-  const [map, setMap] = useState();
   const [random] = useAtom(randomAtom);
-  const [marker, setMarker] = useState();
   const [currentCountry] = useAtom(currentAtom);
-  const [mapContainer, setMapContainer] = useState();
-
-  const mapRef = useCallback((node) => {
+  const [marker, setMarker] = useAtom(markerAtom);
+  const [map, setMap] = useState<google.maps.Map | null>(null);
+  const [mapContainer, setMapContainer] = useState<HTMLDivElement | null>(null);
+  const mapRef = useCallback((node: HTMLDivElement) => {
     node && setMapContainer(node);
   }, []);
-
   const mapOptions = {
     center: currentCountry.position,
     zoom: random,
@@ -400,9 +397,7 @@ export default function Home() {
     ],
     keyboardShortcuts: false,
   };
-
-  const onLoadMap = (map) => setMap(map);
-
+  const onLoadMap = (map: google.maps.Map) => setMap(map);
   useEffect(() => {
     if (!map) return;
     if (marker) {
@@ -418,13 +413,12 @@ export default function Home() {
     map.setZoom(random);
     map.setCenter(currentCountry.position);
   }, [map, currentCountry]);
-
   return (
     <>
       <Modal />
       <Navbar />
       <GoogleMapsProvider
-        googleMapsAPIKey={process.env.NEXT_PUBLIC_MAP_API_KEY}
+        googleMapsAPIKey={process.env.NEXT_PUBLIC_MAP_API_KEY as string}
         mapContainer={mapContainer}
         mapOptions={mapOptions}
         onLoadMap={onLoadMap}
