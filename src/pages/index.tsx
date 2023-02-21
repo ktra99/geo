@@ -9,16 +9,18 @@ import {
   scoreAtom,
   selectedAtom,
 } from "@src/atoms";
+import countries from "@src/countries.json";
 import useScores from "@src/hooks/useScores";
 import { Country } from "@src/types";
 import { shuffle } from "@src/utils/shuffle";
+import { useUser } from "@supabase/auth-helpers-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
 import { formatDistance } from "date-fns";
 import { useAtom } from "jotai";
 import dynamic from "next/dynamic";
 import { FormEvent, Fragment, useCallback, useEffect, useState } from "react";
-import countries from "../countries.json";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 
 const GoogleMapsProvider = dynamic(
   () =>
@@ -29,9 +31,11 @@ const GoogleMapsProvider = dynamic(
 );
 
 function Modal() {
+  const user = useUser();
   const { data } = useScores();
   const queryClient = useQueryClient();
   const [open, setOpen] = useAtom(openAtom);
+  const supabaseClient = useSupabaseClient();
   const [score, setScore] = useAtom(scoreAtom);
   const [rounds, setRounds] = useAtom(roundAtom);
   const play = () => {
@@ -71,11 +75,13 @@ function Modal() {
       name,
       score,
     });
+    setScore(0);
+    setRounds(0);
     target.reset();
   };
   useEffect(() => {
-    if (rounds === 20) setOpen(true);
-  }, [rounds, setOpen]);
+    if ((user && rounds === 20) || rounds === 20) setOpen(true);
+  }, [user, rounds, setOpen]);
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={() => null}>
@@ -141,35 +147,87 @@ function Modal() {
                   </li>
                 </ul>
                 <form className="space-y-4" onSubmit={handleOnSubmit}>
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="block text-sm font-medium text-gray-700"
+                  {user ? (
+                    <>
+                      <div>
+                        <label
+                          htmlFor="name"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Name
+                        </label>
+                        <div className="mt-1">
+                          <input
+                            type="text"
+                            name="name"
+                            id="name"
+                            className="block w-full rounded-lg border-gray-300 py-3 shadow-sm focus:border-black focus:ring-black"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <button
+                        type="submit"
+                        className={clsx(
+                          rounds < 20
+                            ? "cursor-not-allowed bg-slate-500 hover:bg-slate-600"
+                            : "bg-black hover:bg-slate-800",
+                          "w-full rounded-lg border border-transparent px-6 py-3 text-base font-medium text-white shadow-sm transition duration-300 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-2"
+                        )}
+                        disabled={rounds < 20}
+                      >
+                        Submit score
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={async () =>
+                        supabaseClient.auth.signInWithOAuth({
+                          provider: "google",
+                        })
+                      }
+                      className="flex w-full items-center justify-center rounded-lg border border-transparent bg-black px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-2"
                     >
-                      Name
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        type="text"
-                        name="name"
-                        id="name"
-                        className="block w-full rounded-lg border-gray-300 py-3 shadow-sm focus:border-black focus:ring-black"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <button
-                    type="submit"
-                    className={clsx(
-                      rounds < 20
-                        ? "cursor-not-allowed bg-slate-500 hover:bg-slate-600"
-                        : "bg-black hover:bg-slate-800",
-                      "w-full rounded-lg border border-transparent px-6 py-3 text-base font-medium text-white shadow-sm transition duration-300 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-2"
-                    )}
-                    disabled={rounds < 20}
-                  >
-                    Submit score
-                  </button>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlnsXlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 48 48"
+                        className="-ml-1 mr-3 h-5 w-5"
+                      >
+                        <defs>
+                          <path
+                            id="a"
+                            d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z"
+                          />
+                        </defs>
+                        <clipPath id="b">
+                          <use xlinkHref="#a" overflow="visible" />
+                        </clipPath>
+                        <path
+                          clipPath="url(#b)"
+                          fill="#FBBC05"
+                          d="M0 37V11l17 13z"
+                        />
+                        <path
+                          clipPath="url(#b)"
+                          fill="#EA4335"
+                          d="m0 11 17 13 7-6.1L48 14V0H0z"
+                        />
+                        <path
+                          clipPath="url(#b)"
+                          fill="#34A853"
+                          d="m0 37 30-23 7.9 1L48 0v48H0z"
+                        />
+                        <path
+                          clipPath="url(#b)"
+                          fill="#4285F4"
+                          d="M48 48 17 24l-4-3 35-10z"
+                        />
+                      </svg>
+                      Login
+                    </button>
+                  )}
                   <button
                     type="button"
                     className="w-full rounded-lg border-2 border-black px-6 py-3 text-base font-medium text-black shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-2"
