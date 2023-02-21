@@ -6,8 +6,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Score | Score[] | string>
 ) {
-  if(!process.env.NEXT_PUBLIC_TOKEN) return res.status(403).send("mot authenticated")
-  else if(req.method === "GET"){
+  if(req.method === "GET"){
     const scores = await prisma.score.findMany({
       orderBy: {
         score: "desc"
