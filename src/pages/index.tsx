@@ -21,6 +21,7 @@ import { useAtom } from "jotai";
 import dynamic from "next/dynamic";
 import { FormEvent, Fragment, useCallback, useEffect, useState } from "react";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { NextSeo } from "next-seo";
 
 const GoogleMapsProvider = dynamic(
   () =>
@@ -477,6 +478,30 @@ export default function Home() {
   }, [map, currentCountry]);
   return (
     <>
+      <NextSeo
+        title="Kenny Tran - Geo"
+        description="An inspired Geoguessr web app with leaderboard panel"
+        canonical="https://geo.ktra99.dev/"
+        openGraph={{
+          title: "Kenny Tran - Geo",
+          description: "An inspired Geoguessr web app with leaderboard panel",
+          images: [
+            {
+              url: "/og.png",
+              width: 800,
+              height: 600,
+              alt: "Og Image Alt",
+              type: "image/jpeg",
+            },
+          ],
+          siteName: "geo.ktra99.dev",
+        }}
+        twitter={{
+          handle: "@ktra99",
+          site: "@geo.ktra99.dev",
+          cardType: "summary_large_image",
+        }}
+      />
       <Modal />
       <Navbar />
       <GoogleMapsProvider
