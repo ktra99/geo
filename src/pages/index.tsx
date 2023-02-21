@@ -185,6 +185,9 @@ function Modal() {
                       onClick={async () =>
                         supabaseClient.auth.signInWithOAuth({
                           provider: "google",
+                          options: {
+                            redirectTo: "https://geo.ktra99.dev/",
+                          },
                         })
                       }
                       className="flex w-full items-center justify-center rounded-lg border border-transparent bg-black px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-2"
