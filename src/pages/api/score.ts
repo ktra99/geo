@@ -6,7 +6,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Score | Score[] | string>
 ) {
-  if(req.headers["x-auth-token"] !== process.env.NEXT_PUBLIC_TOKEN) return res.status(403).send("mot authenticated")
+  if(!process.env.NEXT_PUBLIC_TOKEN) return res.status(403).send("mot authenticated")
   else if(req.method === "GET"){
     const scores = await prisma.score.findMany({
       orderBy: {
