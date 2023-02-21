@@ -487,7 +487,7 @@ export default function Home() {
           description: "An inspired Geoguessr web app with leaderboard panel",
           images: [
             {
-              url: "/og.png",
+              url: "https://geo.ktra99.dev/og.png",
               width: 800,
               height: 600,
               alt: "Og Image Alt",
